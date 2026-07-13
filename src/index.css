@@ -431,19 +431,31 @@ textarea.form__input { resize: vertical; min-height: 80px; }
 .overlay__body h3 { font-size: 1.2rem; margin-bottom: 16px; }
 .overlay__body .booking { max-width: 100%; }
 
-/* ── Social Proof ── */
-.social-proof__stats {
-  display: flex; align-items: center; justify-content: center; gap: 32px;
-  flex-wrap: wrap;
+/* ── Review Cards ── */
+.review-cards {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;
 }
-.social-proof__stat { display: flex; flex-direction: column; align-items: center; gap: 4px; }
-.social-proof__number { font-family: var(--font-serif); font-size: 2rem; font-weight: 300; }
-.social-proof__label { font-size: 12px; color: var(--ink-muted); letter-spacing: 0.03em; }
-.social-proof__divider { width: 1px; height: 40px; background: var(--border); }
-@media (max-width: 480px) {
-  .social-proof__stats { gap: 20px; }
-  .social-proof__divider { display: none; }
-  .social-proof__stat { flex: 1; min-width: 90px; }
+.review-card {
+  display: flex; flex-direction: column; align-items: center; gap: 8px;
+  padding: 28px 20px; border: 1px solid var(--border); border-radius: var(--radius-lg);
+  text-decoration: none; color: var(--ink); transition: var(--transition);
+  background: var(--white);
+}
+.review-card:hover { border-color: var(--gold); box-shadow: var(--shadow-md); transform: translateY(-2px); }
+.review-card__logo { display: flex; align-items: center; gap: 8px; margin-bottom: 4px; }
+.review-card__platform { font-size: 14px; font-weight: 600; letter-spacing: 0.02em; }
+.review-card__score { font-family: var(--font-serif); font-size: 2.2rem; font-weight: 300; line-height: 1; }
+.review-card__stars { display: flex; gap: 2px; }
+.review-card__count { font-size: 12px; color: var(--ink-muted); }
+.review-card__link { font-size: 12px; font-weight: 600; color: var(--gold-dark); letter-spacing: 0.03em; margin-top: 4px; }
+@media (max-width: 640px) {
+  .review-cards { grid-template-columns: 1fr; gap: 12px; }
+  .review-card { flex-direction: row; padding: 16px 20px; gap: 12px; }
+  .review-card__logo { margin-bottom: 0; }
+  .review-card__score { font-size: 1.5rem; }
+  .review-card__stars { display: none; }
+  .review-card__count { display: none; }
+  .review-card__link { margin-top: 0; margin-left: auto; }
 }
 
 /* ── Returning Guest ── */
