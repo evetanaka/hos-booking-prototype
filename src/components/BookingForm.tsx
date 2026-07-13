@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import type { Venue } from '../data/venues';
 import { OCCASIONS } from '../data/venues';
 
@@ -6,6 +6,27 @@ interface Props {
   venue: Venue;
   onSubmit: (data: any) => void;
   onBack: () => void;
+}
+
+const GUEST_STORAGE_KEY = 'ds_guest_info';
+
+interface SavedGuest {
+  firstName: string;
+  lastName: string;
+  email: string;
+  phone: string;
+}
+
+function getSavedGuest(): SavedGuest | null {
+  try {
+    const raw = localStorage.getItem(GUEST_STORAGE_KEY);
+    if (!raw) return null;
+    return JSON.parse(raw);
+  } catch { return null; }
+}
+
+function saveGuest(data: SavedGuest) {
+  try { localStorage.setItem(GUEST_STORAGE_KEY, JSON.stringify(data)); } catch {}
 }
 
 export function BookingForm({ venue, onSubmit, onBack }: Props) {
@@ -18,17 +39,53 @@ export function BookingForm({ venue, onSubmit, onBack }: Props) {
   const [specialRequests, setSpecialRequests] = useState('');
   const [acceptPolicy, setAcceptPolicy] = useState(false);
   const [marketingOptIn, setMarketingOptIn] = useState(false);
+  const [isReturning, setIsReturning] = useState(false);
+
+  // Auto-fill from saved guest data
+  useEffect(() => {
+    const saved = getSavedGuest();
+    if (saved) {
+      setFirstName(saved.firstName);
+      setLastName(saved.lastName);
+      setEmail(saved.email);
+      setPhone(saved.phone);
+      setIsReturning(true);
+    }
+  }, []);
 
   const isValid = firstName && lastName && email && (!venue.bookingConfig.requirePhone || phone) && acceptPolicy;
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!isValid) return;
+    // Save guest info for next time
+    saveGuest({ firstName, lastName, email, phone });
     onSubmit({ firstName, lastName, email, phone, occasion, allergies, specialRequests, marketingOptIn });
   };
 
   return (
     <form className="form fade-in" onSubmit={handleSubmit}>
+      {isReturning && (
+        <div className="returning-guest">
+          <div className="returning-guest__icon">👋</div>
+          <div>
+            <strong>Bon retour, {firstName} !</strong>
+            <span>Vos informations ont été pré-remplies.</span>
+          </div>
+          <button
+            type="button"
+            className="returning-guest__clear"
+            onClick={() => {
+              setFirstName(''); setLastName(''); setEmail(''); setPhone('');
+              setIsReturning(false);
+              localStorage.removeItem(GUEST_STORAGE_KEY);
+            }}
+          >
+            Pas vous ?
+          </button>
+        </div>
+      )}
+
       <div className="form__row">
         <div className="form__group">
           <label className="form__label">Prénom *</label>

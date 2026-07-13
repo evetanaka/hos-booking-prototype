@@ -1,12 +1,14 @@
 import type { Venue } from '../data/venues';
+import type { RefObject } from 'react';
 
 interface Props {
   venue: Venue;
   partner: { name: string; message?: string } | null;
   onBook: () => void;
+  heroCtaRef: RefObject<HTMLDivElement | null>;
 }
 
-export function Hero({ venue, partner, onBook }: Props) {
+export function Hero({ venue, partner, onBook, heroCtaRef }: Props) {
   return (
     <div className="hero">
       <div className="hero__bg" style={{ backgroundImage: `url(${venue.heroImage})` }} />
@@ -32,7 +34,7 @@ export function Hero({ venue, partner, onBook }: Props) {
           </span>
           <span>{venue.cuisine.join(' · ')}</span>
         </div>
-        <div style={{ marginTop: 32, display: 'flex', gap: 16, flexWrap: 'wrap' }}>
+        <div ref={heroCtaRef} style={{ marginTop: 32, display: 'flex', gap: 16, flexWrap: 'wrap' }}>
           <button className="cta" onClick={onBook}>Réserver une table</button>
           <a href="#gallery" className="cta cta--outline">Découvrir</a>
         </div>
