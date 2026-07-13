@@ -160,7 +160,8 @@ input, textarea, select { font-family: var(--font-sans); font-size: 15px; }
 /* ── Booking Flow ── */
 .booking { max-width: 640px; margin: 0 auto; }
 .booking__steps {
-  display: flex; align-items: center; justify-content: center; gap: 0; margin-bottom: 48px;
+  display: flex; align-items: center; justify-content: center; gap: 0; margin-bottom: 40px;
+  padding: 20px 0; background: var(--sand); border-radius: var(--radius-lg); 
 }
 .booking__step {
   display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 500;
@@ -179,13 +180,14 @@ input, textarea, select { font-family: var(--font-sans); font-size: 15px; }
 .booking__step-line--done { background: var(--green); }
 @media (max-width: 640px) {
   .booking__step span:not(.booking__step-num) { display: none; }
-  .booking__step-line { width: 24px; }
+  .booking__step-line { width: 20px; }
+  .booking__steps { padding: 16px 0; }
 }
 
 /* ── Calendar ── */
-.calendar { margin-bottom: 32px; }
+.calendar { margin-bottom: 32px; padding: 0 4px; }
 .calendar__header {
-  display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px;
+  display: flex; align-items: center; justify-content: space-between; margin-bottom: 24px;
 }
 .calendar__nav {
   width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center;
@@ -194,7 +196,7 @@ input, textarea, select { font-family: var(--font-sans); font-size: 15px; }
 }
 .calendar__nav:hover { border-color: var(--ink); color: var(--ink); }
 .calendar__month { font-family: var(--font-serif); font-size: 1.4rem; }
-.calendar__grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; text-align: center; }
+.calendar__grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 6px; text-align: center; }
 .calendar__dow { font-size: 11px; font-weight: 600; color: var(--ink-muted); letter-spacing: 0.05em; padding: 8px 0; text-transform: uppercase; }
 .calendar__day {
   aspect-ratio: 1; display: flex; align-items: center; justify-content: center;
@@ -370,8 +372,8 @@ textarea.form__input { resize: vertical; min-height: 80px; }
 @keyframes overlayFadeIn { 0% { opacity: 0; } 100% { opacity: 1; } }
 
 .overlay__panel {
-  background: var(--white); width: 100%; max-width: 560px; max-height: 92vh;
-  border-radius: 20px 20px 0 0; display: flex; flex-direction: column;
+  background: var(--white); width: 100%; max-width: 640px; max-height: 92vh;
+  border-radius: 24px 24px 0 0; display: flex; flex-direction: column;
   animation: overlaySlideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1);
   box-shadow: 0 -8px 48px rgba(0,0,0,0.15);
 }
@@ -380,18 +382,18 @@ textarea.form__input { resize: vertical; min-height: 80px; }
 @media (min-width: 769px) {
   .overlay { align-items: center; }
   .overlay__panel {
-    max-height: 85vh; border-radius: 16px;
+    max-height: 88vh; border-radius: 20px;
     box-shadow: 0 24px 80px rgba(0,0,0,0.2);
   }
 }
 
 .overlay__header {
   display: flex; align-items: center; justify-content: space-between;
-  padding: 20px 24px; border-bottom: 1px solid var(--border);
+  padding: 24px 32px; border-bottom: 1px solid var(--border);
   flex-shrink: 0;
 }
-.overlay__venue { font-family: var(--font-serif); font-size: 1.3rem; display: block; }
-.overlay__subtitle { font-size: 12px; color: var(--ink-muted); letter-spacing: 0.05em; text-transform: uppercase; font-weight: 500; }
+.overlay__venue { font-family: var(--font-serif); font-size: 1.5rem; display: block; }
+.overlay__subtitle { font-size: 11px; color: var(--ink-muted); letter-spacing: 0.12em; text-transform: uppercase; font-weight: 500; margin-top: 2px; }
 .overlay__close {
   width: 36px; height: 36px; border-radius: 50%; border: 1px solid var(--border);
   display: flex; align-items: center; justify-content: center;
@@ -401,15 +403,22 @@ textarea.form__input { resize: vertical; min-height: 80px; }
 .overlay__close:hover { border-color: var(--ink); color: var(--ink); }
 
 .overlay__body {
-  flex: 1; overflow-y: auto; padding: 32px 24px;
+  flex: 1; overflow-y: auto; padding: 40px 36px;
   -webkit-overflow-scrolling: touch;
+}
+@media (max-width: 480px) {
+  .overlay__body { padding: 28px 20px; }
+  .overlay__header { padding: 20px 20px; }
 }
 
 .overlay__trust {
   display: flex; align-items: center; justify-content: center; gap: 6px;
-  padding: 12px 24px; border-top: 1px solid var(--border);
+  padding: 14px 32px; border-top: 1px solid var(--border);
   font-size: 11px; color: var(--ink-muted); flex-shrink: 0;
-  letter-spacing: 0.02em;
+  letter-spacing: 0.02em; background: var(--sand);
+}
+@media (min-width: 769px) {
+  .overlay__trust { border-radius: 0 0 20px 20px; }
 }
 
 /* ── Social Proof ── */
