@@ -63,7 +63,7 @@ export function BookingFlow({ venue, partner, onConfirm }: Props) {
       {/* Step 1: Date + Covers */}
       {step === 1 && (
         <div className="fade-in">
-          <h3 style={{ textAlign: 'center', marginBottom: 32 }}>
+          <h3 style={{ textAlign: 'center', marginBottom: 16 }}>
             Quand souhaitez-vous venir ?
           </h3>
           <CoverSelector covers={covers} onChange={setCovers} min={venue.bookingConfig.minCovers} max={venue.bookingConfig.maxCovers} />
