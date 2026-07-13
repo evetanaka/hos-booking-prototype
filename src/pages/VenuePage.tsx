@@ -17,7 +17,6 @@ export function VenuePage() {
   const [heroCtaVisible, setHeroCtaVisible] = useState(true);
   const heroCtaRef = useRef<HTMLDivElement>(null);
 
-  // Intersection observer: track when hero CTA leaves viewport
   useEffect(() => {
     const el = heroCtaRef.current;
     if (!el) return;
@@ -45,6 +44,27 @@ export function VenuePage() {
     <div>
       <Hero venue={venue} partner={partner} onBook={handleBook} heroCtaRef={heroCtaRef} />
 
+      {/* Description — right after hero */}
+      <section className="section">
+        <div style={{ maxWidth: 720, margin: '0 auto', textAlign: 'center' }}>
+          <p style={{ fontFamily: 'var(--font-serif)', fontSize: 'clamp(1.1rem, 2.5vw, 1.4rem)', lineHeight: 1.7, color: 'var(--ink-light)', fontWeight: 300 }}>
+            {venue.description}
+          </p>
+        </div>
+      </section>
+
+      {/* Menu — before gallery and about */}
+      {venue.bookingConfig.showMenu && (
+        <section className="section section--sand">
+          <div style={{ maxWidth: 720, margin: '0 auto' }}>
+            <div className="section__label">La Carte</div>
+            <h2 className="section__title">Notre Menu</h2>
+            <div className="divider" />
+            <MenuPreview menu={venue.menu} />
+          </div>
+        </section>
+      )}
+
       <section className="section" id="gallery">
         <div style={{ maxWidth: 1100, margin: '0 auto' }}>
           <Gallery images={venue.gallery} />
@@ -57,19 +77,8 @@ export function VenuePage() {
         </div>
       </section>
 
-      {venue.bookingConfig.showMenu && (
-        <section className="section">
-          <div style={{ maxWidth: 720, margin: '0 auto' }}>
-            <div className="section__label">La Carte</div>
-            <h2 className="section__title">Notre Menu</h2>
-            <div className="divider" />
-            <MenuPreview menu={venue.menu} />
-          </div>
-        </section>
-      )}
-
-      {/* Social proof / conversion nudge */}
-      <section className="section section--sand" style={{ paddingTop: 48, paddingBottom: 48 }}>
+      {/* Social proof */}
+      <section className="section" style={{ paddingTop: 48, paddingBottom: 48 }}>
         <div style={{ maxWidth: 720, margin: '0 auto', textAlign: 'center' }}>
           <div className="social-proof fade-in">
             <div className="social-proof__stats">
@@ -97,15 +106,13 @@ export function VenuePage() {
 
       <Footer venue={venue} />
 
-      {/* ── Floating CTA (appears when hero CTA scrolls away) ── */}
+      {/* Floating CTA */}
       {!heroCtaVisible && !showBooking && (
         <>
-          {/* Desktop: bottom-right pill */}
           <button className="floating-cta floating-cta--desktop" onClick={handleBook}>
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
             Réserver
           </button>
-          {/* Mobile: full-width bottom bar */}
           <div className="floating-cta--mobile">
             <div className="floating-cta__info">
               <span className="floating-cta__venue">{venue.name}</span>
@@ -118,7 +125,6 @@ export function VenuePage() {
         </>
       )}
 
-      {/* ── Booking Overlay ── */}
       <BookingOverlay
         open={showBooking}
         onClose={() => setShowBooking(false)}
